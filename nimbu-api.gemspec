@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Nimbu::VERSION
   gem.authors       = ["Peter Dedene"]
   gem.email         = ["support@nimbu.io"]
-  gem.description   = %q{ The official Ruby wrapper around the Nimbu API. }
-  gem.summary       = %q{ The official Ruby wrapper around the Nimbu API. }
+  gem.summary       = 'Ruby bindings for the Nimbu API'
+  gem.description   = 'Nimbu is the easiest way to build a beautiful multi-lingual online store! See http://nimbu.io for more information.'
   gem.homepage      = "http://www.nimbu.io"
   gem.license       = "MIT"
 
