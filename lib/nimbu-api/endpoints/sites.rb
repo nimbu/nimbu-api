@@ -18,7 +18,7 @@ module Nimbu
         require_authentication
         arguments(args, :required => [:site_id])
 
-        get_request("/authorizations/#{site_id}", arguments.params)
+        get_request("/sites/#{site_id}", arguments.params)
       end
       alias :find :get
 
@@ -26,7 +26,7 @@ module Nimbu
       private
 
       def require_authentication
-        raise ArgumentError, 'You need to be authentication to access the sites' unless authenticated?
+        raise ArgumentError, 'You need to be authenticated to access the sites' unless authenticated?
       end
 
     end # Authorizations

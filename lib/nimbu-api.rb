@@ -15,6 +15,7 @@ require 'nimbu-api/endpoint'
 require 'nimbu-api/client'
 
 require 'nimbu-api/endpoints/authorizations'
+require 'nimbu-api/endpoints/login'
 require 'nimbu-api/endpoints/sites'
 require 'nimbu-api/endpoints/channels'
 require 'nimbu-api/endpoints/channels/entries'

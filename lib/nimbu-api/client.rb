@@ -22,5 +22,9 @@ module Nimbu
       Nimbu::Builder.new('Videos', current_options.merge(options), &block)
     end
 
+    def authenticate(options={}, &block)
+      Nimbu::Builder.new('Login', current_options.merge(options), &block).response
+    end
+
   end # Client
 end # Nimbu

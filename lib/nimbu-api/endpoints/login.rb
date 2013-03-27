@@ -1,0 +1,26 @@
+# encoding: utf-8
+
+module Nimbu
+  module Endpoints
+    class Login < Endpoint
+
+      def initialize(options={}, &block)
+        super
+
+        require_authentication
+
+        # fetch api token
+        @response = post_request("/auth/login")
+      end
+
+      def response
+        @response
+      end
+
+      def require_authentication
+        raise ArgumentError, 'A username and password is required in order to login' unless authenticated?
+      end
+
+    end # Authorizations
+  end # Endpoints
+end # Nimbu
