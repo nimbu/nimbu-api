@@ -4,6 +4,22 @@ module Nimbu
   module Endpoints
     class Themes < Endpoint
 
+      def layouts(options={}, &block)
+        Nimbu::Builder.new('Themes::Layouts', current_options.merge(options), &block)
+      end
+
+      def templates(options={}, &block)
+        Nimbu::Builder.new('Themes::Templates', current_options.merge(options), &block)
+      end
+
+      def snippets(options={}, &block)
+        Nimbu::Builder.new('Themes::Snippets', current_options.merge(options), &block)
+      end
+
+      def assets(options={}, &block)
+        Nimbu::Builder.new('Themes::Assets', current_options.merge(options), &block)
+      end
+
       def list(*args)
         arguments(args)
 
