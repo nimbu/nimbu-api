@@ -5,7 +5,7 @@ require 'nimbu-api/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "nimbu-api"
-  gem.version       = Nimbu::VERSION
+  gem.version       = Nimbu::API::VERSION
   gem.authors       = ["Peter Dedene"]
   gem.email         = ["support@nimbu.io"]
   gem.summary       = 'Ruby bindings for the Nimbu API'
@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'faraday'
   gem.add_dependency 'multi_json'
   gem.add_dependency 'oauth2'
+  gem.add_dependency 'excon'
 
   gem.add_development_dependency "bundler", "~> 1.3"
   gem.add_development_dependency "rake"

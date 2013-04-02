@@ -3,6 +3,12 @@ module Nimbu
     module Constants
       extend self
 
+      # Request headers
+      USER_AGENT = 'User-Agent'.freeze
+      ACCEPT = 'Accept'.freeze
+      ACCEPT_CHARSET = 'Accept-Charset'.freeze
+      NIMBU_SITE = 'X-Nimbu-Site'.freeze
+
       # Response headers
       RATELIMIT_REMAINING = 'X-RateLimit-Remaining'.freeze
       RATELIMIT_LIMIT = 'X-RateLimit-Limit'.freeze
@@ -13,9 +19,6 @@ module Nimbu
       SERVER = 'Server'.freeze
       DATE = 'Date'.freeze
       LOCATION = 'Location'.freeze
-      USER_AGENT = 'User-Agent'.freeze
-      ACCEPT = 'Accept'.freeze
-      ACCEPT_CHARSET = 'Accept-Charset'.freeze
       OAUTH_SCOPES = 'X-Oauth-Scopes'.freeze
       ACCEPTED_OAUTH_SCOPES = 'X-Accepted-Oauth-Scopes'.freeze
 

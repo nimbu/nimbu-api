@@ -14,12 +14,20 @@ module Nimbu
       Nimbu::Builder.new('Sites', current_options.merge(options), &block)
     end
 
+    def themes(options={}, &block)
+      Nimbu::Builder.new('Themes', current_options.merge(options), &block)
+    end
+
     def channels(options={}, &block)
       Nimbu::Builder.new('Channels', current_options.merge(options), &block)
     end
 
     def videos(options={}, &block)
       Nimbu::Builder.new('Videos', current_options.merge(options), &block)
+    end
+
+    def simulator(options={}, &block)
+      Nimbu::Builder.new('Simulator', current_options.merge(options), &block)
     end
 
     def authenticate(options={}, &block)

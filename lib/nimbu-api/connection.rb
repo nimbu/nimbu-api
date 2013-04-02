@@ -15,14 +15,9 @@ module Nimbu
 
     def default_options(options={})
       {
-        # :headers => {
-        #   # ACCEPT           => "application/json",
-        #   # ACCEPT_CHARSET   => "utf-8",
-        #   # USER_AGENT       => user_agent,
-        #   # CONTENT_TYPE     => 'application/json'
-        # },
         :ssl => options.fetch(:ssl) { ssl },
-        :url => options.fetch(:endpoint) { Nimbu.endpoint }
+        :url => options.fetch(:endpoint) { Nimbu.endpoint },
+        :subdomain => options.fetch(:subdomain) { Nimbu.subdomain }
       }.merge(options)
     end
 
@@ -38,13 +33,15 @@ module Nimbu
         builder.use Faraday::Request::UrlEncoded
         builder.use Nimbu::Request::OAuth2, oauth_token if oauth_token?
         builder.use Nimbu::Request::BasicAuth, authentication if basic_authed?
+        builder.use Nimbu::Request::UserAgent
+        builder.use Nimbu::Request::SiteHeader, subdomain
 
         builder.use Faraday::Response::Logger if ENV['DEBUG']
+        builder.use Nimbu::Response::RaiseError
         unless options[:raw]
           builder.use Nimbu::Response::Mashify
           builder.use Nimbu::Response::Json
         end
-        builder.use Nimbu::Response::RaiseError
         builder.adapter adapter
       end
     end

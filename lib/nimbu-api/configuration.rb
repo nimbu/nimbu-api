@@ -9,6 +9,7 @@ module Nimbu
       :oauth_token,
       :endpoint,
       :site,
+      :subdomain,
       :ssl,
       :mime_type,
       :user_agent,
@@ -38,6 +39,9 @@ module Nimbu
     # By default, don't set a user basic authentication
     DEFAULT_BASIC_AUTH = nil
 
+    # By default, don't set a nimbu subdomain
+    DEFAULT_SUBDOMAIN = nil
+
     # The api endpoint used to connect to Nimbu if none is set
     DEFAULT_ENDPOINT = 'https://api.nimbu.io'.freeze
 
@@ -48,7 +52,7 @@ module Nimbu
     DEFAULT_SSL = {}
 
     # The value sent in the http header for 'User-Agent' if none is set
-    DEFAULT_USER_AGENT = "Nimbu Ruby Gem #{Nimbu::VERSION}".freeze
+    DEFAULT_USER_AGENT = "Nimbu Ruby Client #{Nimbu::API::VERSION}".freeze
 
     # By default the <tt>Accept</tt> header will make a request for <tt>JSON</tt>
     DEFAULT_MIME_TYPE = :json
@@ -102,6 +106,7 @@ module Nimbu
       self.basic_auth         = DEFAULT_BASIC_AUTH
       self.auto_pagination    = DEFAULT_AUTO_PAGINATION
       self.adapter            = DEFAULT_ADAPTER
+      self.subdomain          = DEFAULT_SUBDOMAIN
       self
     end
 

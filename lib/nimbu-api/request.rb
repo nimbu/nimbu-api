@@ -5,6 +5,8 @@ require 'nimbu-api/request/basic_auth'
 require 'nimbu-api/request/json'
 require 'nimbu-api/request/validations'
 require 'nimbu-api/request/arguments'
+require 'nimbu-api/request/user_agent'
+require 'nimbu-api/request/site_header'
 
 module Nimbu
 

@@ -1,6 +1,7 @@
 require "nimbu-api/version"
 
 require 'openssl'
+require 'excon'
 require 'faraday'
 require 'multi_json'
 
@@ -16,7 +17,9 @@ require 'nimbu-api/client'
 
 require 'nimbu-api/endpoints/authorizations'
 require 'nimbu-api/endpoints/login'
+require 'nimbu-api/endpoints/simulator'
 require 'nimbu-api/endpoints/sites'
+require 'nimbu-api/endpoints/themes'
 require 'nimbu-api/endpoints/channels'
 require 'nimbu-api/endpoints/channels/entries'
 require 'nimbu-api/endpoints/videos'

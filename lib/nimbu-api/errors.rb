@@ -26,6 +26,6 @@ module Nimbu
   end # Error
 end # Nimbu
 
-%w( service_error bad_request unauthorized forbidden not_found not_acceptable unprocessable_entity internal_server_error service_unavailable client_error invalid_options required_params unknown_value validations ).each do |error|
+%w( service_error bad_request bad_gateway unauthorized forbidden not_found not_acceptable unprocessable_entity internal_server_error service_unavailable client_error invalid_options required_params unknown_value validations ).each do |error|
   require "nimbu-api/errors/#{error}"
 end

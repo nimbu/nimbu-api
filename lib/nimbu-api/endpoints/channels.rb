@@ -6,7 +6,7 @@ module Nimbu
     class Channels < Endpoint
 
       def entries(options={}, &block)
-        @entries ||= Nimbu::Builder.new('Channels::Entries', current_options.merge(options), &block)
+        Nimbu::Builder.new('Channels::Entries', current_options.merge(options), &block)
       end
 
       def list(*args)

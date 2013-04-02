@@ -9,6 +9,7 @@ module Nimbu
       include ::Nimbu::Utils::Json
 
       attr_reader :http_headers
+      attr_reader :http_body
 
       def initialize(response)
         @http_headers = response[:response_headers]
