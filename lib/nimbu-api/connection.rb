@@ -74,7 +74,7 @@ module Nimbu
     # Returns a Fraday::Connection object
     #
     def connection(options={})
-      conn_options = default_options(options)
+      conn_options = default_options({ :ssl => { :ca_file => File.expand_path("../../../vendor/cacert.pem", __FILE__) } }.merge(options))
       clear_cache unless options.empty?
       puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
 
