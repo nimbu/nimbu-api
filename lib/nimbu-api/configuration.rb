@@ -49,7 +49,7 @@ module Nimbu
     DEFAULT_SITE = 'https://www.nimbu.io'.freeze
 
     # The default SSL configuration
-    DEFAULT_SSL = {}
+    DEFAULT_SSL = { :ca_file => File.expand_path("../../../vendor/cacert.pem", __FILE__) }
 
     # The value sent in the http header for 'User-Agent' if none is set
     DEFAULT_USER_AGENT = "nimbu-api/#{Nimbu::API::VERSION} (#{RUBY_PLATFORM}) ruby/#{RUBY_VERSION}".freeze
