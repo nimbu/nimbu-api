@@ -52,7 +52,7 @@ module Nimbu
     DEFAULT_SSL = {}
 
     # The value sent in the http header for 'User-Agent' if none is set
-    DEFAULT_USER_AGENT = "Nimbu Ruby Client #{Nimbu::API::VERSION}".freeze
+    DEFAULT_USER_AGENT = "nimbu-api/#{Nimbu::API::VERSION} (#{RUBY_PLATFORM}) ruby/#{RUBY_VERSION}".freeze
 
     # By default the <tt>Accept</tt> header will make a request for <tt>JSON</tt>
     DEFAULT_MIME_TYPE = :json
