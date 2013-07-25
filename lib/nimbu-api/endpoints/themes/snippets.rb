@@ -10,6 +10,12 @@ module Nimbu
         post_request("/themes/#{theme_id}/snippets", arguments.params)
       end
 
+      def get(*args)
+        arguments(args, :required => [:theme_id, :snippet_id])
+
+        get_request("/themes/#{theme_id}/snippets/#{snippet_id}", arguments.params)
+      end
+
       def delete(*args)
         arguments(args, :required => [:theme_id, :snippet_id])
 

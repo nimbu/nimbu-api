@@ -10,6 +10,12 @@ module Nimbu
         post_request("/themes/#{theme_id}/layouts", arguments.params)
       end
 
+      def get(*args)
+        arguments(args, :required => [:theme_id, :layout_id])
+
+        get_request("/themes/#{theme_id}/layouts/#{layout_id}", arguments.params)
+      end
+
       def delete(*args)
         arguments(args, :required => [:theme_id, :layout_id])
 
