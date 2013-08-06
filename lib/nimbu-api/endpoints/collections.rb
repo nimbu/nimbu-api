@@ -22,7 +22,7 @@ module Nimbu
       def create(*args)
         arguments(args)
 
-        post_request("/collections/#{collection_id}", arguments.params)
+        post_request("/collections", arguments.params)
       end
 
       def update(*args)
