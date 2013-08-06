@@ -45,6 +45,6 @@ module Nimbu
       alias :remove :delete
 
 
-    end # Authorizations
+    end # Channel::Entries
   end # Endpoints
 end # Nimbu

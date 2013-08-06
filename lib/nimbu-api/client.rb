@@ -30,6 +30,14 @@ module Nimbu
       Nimbu::Builder.new('Simulator', current_options.merge(options), &block)
     end
 
+    def products(options={}, &block)
+      Nimbu::Builder.new('Products', current_options.merge(options), &block)
+    end
+
+    def collections(options={}, &block)
+      Nimbu::Builder.new('Collections', current_options.merge(options), &block)
+    end
+
     def authenticate(options={}, &block)
       Nimbu::Builder.new('Login', current_options.merge(options), &block).response
     end
