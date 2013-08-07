@@ -13,7 +13,7 @@ module Nimbu
       alias :all :list
 
       def get(*args)
-        arguments(args, :required => :product_id)
+        arguments(args, :required => [:product_id])
 
         get_request("/products/#{product_id}", arguments.params)
       end
@@ -26,14 +26,14 @@ module Nimbu
       end
 
       def update(*args)
-        arguments(args, :required => :product_id)
+        arguments(args, :required => [:product_id])
 
         patch_request("/products/#{product_id}", arguments.params)
       end
       alias :edit :update
 
       def delete(*args)
-        arguments(args, :required => :product_id)
+        arguments(args, :required => [:product_id])
 
         delete_request("/products/#{product_id}", arguments.params)
       end

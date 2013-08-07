@@ -13,7 +13,7 @@ module Nimbu
       alias :all :list
 
       def get(*args)
-        arguments(args, :required => :collection_id)
+        arguments(args, :required => [:collection_id])
 
         get_request("/collections/#{collection_id}", arguments.params)
       end
@@ -26,14 +26,14 @@ module Nimbu
       end
 
       def update(*args)
-        arguments(args, :required => :collection_id)
+        arguments(args, :required => [:collection_id])
 
         patch_request("/collections/#{collection_id}", arguments.params)
       end
       alias :edit :update
 
       def delete(*args)
-        arguments(args, :required => :collection_id)
+        arguments(args, :required => [:collection_id])
 
         delete_request("/collections/#{collection_id}", arguments.params)
       end
