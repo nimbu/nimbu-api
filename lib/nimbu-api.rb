@@ -27,6 +27,7 @@ require 'nimbu-api/endpoints/themes/assets'
 require 'nimbu-api/endpoints/channels'
 require 'nimbu-api/endpoints/channels/entries'
 require 'nimbu-api/endpoints/products'
+require 'nimbu-api/endpoints/customers'
 require 'nimbu-api/endpoints/collections'
 require 'nimbu-api/endpoints/videos'
 

@@ -34,6 +34,10 @@ module Nimbu
       Nimbu::Builder.new('Products', current_options.merge(options), &block)
     end
 
+    def customers(options={}, &block)
+      Nimbu::Builder.new('Customers', current_options.merge(options), &block)
+    end
+
     def collections(options={}, &block)
       Nimbu::Builder.new('Collections', current_options.merge(options), &block)
     end
