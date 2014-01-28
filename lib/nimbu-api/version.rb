@@ -1,5 +1,5 @@
 module Nimbu
   module API
-    VERSION = "0.2.beta.3"
+    VERSION = "0.2"
   end
 end
