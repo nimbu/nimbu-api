@@ -35,6 +35,7 @@ module Nimbu
         builder.use Nimbu::Request::BasicAuth, authentication if basic_authed?
         builder.use Nimbu::Request::UserAgent
         builder.use Nimbu::Request::SiteHeader, subdomain
+        builder.use Nimbu::Request::ContentLocale, content_locale
 
         builder.use Faraday::Response::Logger if ENV['DEBUG']
         builder.use Nimbu::Response::RaiseError

@@ -7,6 +7,7 @@ require 'nimbu-api/request/validations'
 require 'nimbu-api/request/arguments'
 require 'nimbu-api/request/user_agent'
 require 'nimbu-api/request/site_header'
+require 'nimbu-api/request/content_locale'
 
 module Nimbu
 

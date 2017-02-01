@@ -17,7 +17,8 @@ module Nimbu
       VALID_API_KEYS = [
         'page',
         'per_page',
-        'auto_pagination'
+        'auto_pagination',
+        'content_locale'
       ]
 
       end # Validation

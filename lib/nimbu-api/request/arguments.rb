@@ -13,6 +13,7 @@ module Nimbu
       include Validations
 
       AUTO_PAGINATION = 'auto_pagination'.freeze
+      CONTENT_LOCALE = 'content_locale'.freeze
 
       # Parameters passed to request
       attr_reader :params
@@ -61,6 +62,7 @@ module Nimbu
         @params = options
         @remaining = extract_remaining(args)
         extract_pagination(options)
+        extract_content_locale(options)
         yield_or_eval(&block)
         self
       end
@@ -112,6 +114,13 @@ module Nimbu
       def extract_pagination(options)
         if (value = options.delete(AUTO_PAGINATION))
           api.auto_pagination = value
+        end
+      end
+
+      # Find content_locale parameter in options hash
+      def extract_content_locale(options)
+        if (value = options.delete(CONTENT_LOCALE))
+          api.content_locale = value
         end
       end
 

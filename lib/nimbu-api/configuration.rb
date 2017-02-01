@@ -18,6 +18,7 @@ module Nimbu
       :password,
       :basic_auth,
       :auto_pagination,
+      :content_locale,
       :adapter
     ].freeze
 
@@ -63,6 +64,9 @@ module Nimbu
     # By default, don't traverse the page links
     DEFAULT_AUTO_PAGINATION = false
 
+    # By default, don't set a content_locale
+    DEFAULT_CONTENT_LOCALE = nil
+
     # Other adapters are :typhoeus, :patron, :em_synchrony, :excon, :test
     DEFAULT_ADAPTER = :net_http
 
@@ -105,6 +109,7 @@ module Nimbu
       self.password           = DEFAULT_PASSWORD
       self.basic_auth         = DEFAULT_BASIC_AUTH
       self.auto_pagination    = DEFAULT_AUTO_PAGINATION
+      self.content_locale     = DEFAULT_CONTENT_LOCALE
       self.adapter            = DEFAULT_ADAPTER
       self.subdomain          = DEFAULT_SUBDOMAIN
       self
