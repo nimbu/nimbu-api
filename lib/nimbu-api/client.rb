@@ -42,6 +42,14 @@ module Nimbu
       Nimbu::Builder.new('Collections', current_options.merge(options), &block)
     end
 
+    def devices(options={}, &block)
+      Nimbu::Builder.new('Devices', current_options.merge(options), &block)
+    end
+
+    def coupons(options={}, &block)
+      Nimbu::Builder.new('Coupons', current_options.merge(options), &block)
+    end
+
     def authenticate(options={}, &block)
       Nimbu::Builder.new('Login', current_options.merge(options), &block).response
     end

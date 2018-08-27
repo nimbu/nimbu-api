@@ -7,7 +7,7 @@ module Nimbu
     dependency 'hashie/mash'
 
     define_parser do |body|
-      ::Hashie::Mash.new body
+      Result.new body
     end
 
     def parse(body)
@@ -19,6 +19,10 @@ module Nimbu
       else
         body
       end
+    end
+
+    class Result < ::Hashie::Mash
+      disable_warnings
     end
   end # Response::Mashify
 end # Nimbu

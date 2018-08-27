@@ -19,6 +19,12 @@ module Nimbu
       end
       alias :find :get
 
+      def count(*args)
+        arguments(args)
+
+        get_request("/products/count", arguments.params)
+      end
+
       def create(*args)
         arguments(args)
 

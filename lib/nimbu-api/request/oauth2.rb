@@ -17,8 +17,7 @@ module Nimbu
         params = { ACCESS_TOKEN => @token }.update query_params(env[:url])
 
         if token = params[ACCESS_TOKEN] and !token.empty?
-          env[:url].query = build_query params
-          env[:request_headers].merge!(AUTH_HEADER => "Token token=\"#{token}\"")
+          env[:request_headers].merge!(AUTH_HEADER => "bearer #{token}")
         end
 
         @app.call env

@@ -17,6 +17,25 @@ module Nimbu
       end
       alias :all :list
 
+      def first(*args)
+        arguments(args, :required => [:channel_id])
+
+        get_request("/channels/#{channel_id}/entries", arguments.params.merge(limit: 1)).first
+      end
+
+      def list_deleted(*args)
+        arguments(args, :required => [:channel_id])
+
+        get_request("/channels/#{channel_id}/entries/deleted", arguments.params)
+      end
+      alias :list_removed :list_deleted
+
+      def count(*args)
+        arguments(args, :required => [:channel_id])
+
+        get_request("/channels/#{channel_id}/entries/count", arguments.params)
+      end
+
       def get(*args)
         arguments(args, :required => [:channel_id, :entry_id])
 
@@ -43,8 +62,7 @@ module Nimbu
         delete_request("/channels/#{channel_id}/entries/#{entry_id}", arguments.params)
       end
       alias :remove :delete
-
-
+      
     end # Channel::Entries
   end # Endpoints
 end # Nimbu

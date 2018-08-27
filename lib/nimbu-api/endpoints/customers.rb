@@ -12,6 +12,12 @@ module Nimbu
       end
       alias :all :list
 
+      def count(*args)
+        arguments(args)
+
+        get_request("/customers/count", arguments.params)
+      end
+
       def get(*args)
         arguments(args, :required => [:customer_id])
 

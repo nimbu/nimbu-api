@@ -16,8 +16,7 @@ module Nimbu
     def default_options(options={})
       {
         :ssl => options.fetch(:ssl) { ssl },
-        :url => options.fetch(:endpoint) { Nimbu.endpoint },
-        :subdomain => options.fetch(:subdomain) { Nimbu.subdomain }
+        :url => options.fetch(:endpoint) { Nimbu.endpoint }
       }.merge(options)
     end
 
@@ -65,9 +64,9 @@ module Nimbu
     def stack(options={}, &block)
       @stack ||= begin
         if block_given?
-          Faraday::Builder.new(&block)
+          Faraday::RackBuilder.new(&block)
         else
-          Faraday::Builder.new(&default_middleware(options))
+          Faraday::RackBuilder.new(&default_middleware(options))
         end
       end
     end
@@ -75,7 +74,7 @@ module Nimbu
     # Returns a Fraday::Connection object
     #
     def connection(options={})
-      conn_options = default_options(options)
+      conn_options = default_options(options).keep_if {|k,_| ALLOWED_OPTIONS.include? k }
       clear_cache unless options.empty?
       puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
 
