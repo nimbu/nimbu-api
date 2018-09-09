@@ -7,7 +7,11 @@ module Nimbu
       def create(*args)
         arguments(args, :required => [:theme_id])
 
-        post_request("/themes/#{theme_id}/assets", arguments.params, :with_attachments => true)
+        forced = arguments.params.delete("force")
+        query_params = {}
+        query_params = {force: forced} unless forced.nil?
+
+        post_request("/themes/#{theme_id}/assets", arguments.params, {:with_attachments => true, :params => query_params})
       end
 
       def delete(*args)

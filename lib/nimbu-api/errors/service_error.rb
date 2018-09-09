@@ -1,6 +1,6 @@
 # encoding: utf-8
 # require 'multi_json'
-require 'nimbu-api/utils/json'
+require 'nimbu-api/utils/json'  
 
 module Nimbu
   # Raised when Nimbu returns any of the HTTP status codes
@@ -11,8 +11,12 @@ module Nimbu
       attr_reader :http_headers
       attr_reader :http_body
 
+      attr_reader :status
+
       def initialize(response)
         @http_headers = response[:response_headers]
+        @status = response[:status]
+
         message = parse_response(response)
         super(message)
       end

@@ -7,7 +7,11 @@ module Nimbu
       def create(*args)
         arguments(args, :required => [:theme_id])
 
-        post_request("/themes/#{theme_id}/templates", arguments.params)
+        forced = arguments.params.delete("force")
+        query_params = {}
+        query_params = {force: forced} unless forced.nil?
+
+        post_request("/themes/#{theme_id}/templates", arguments.params, params: query_params)
       end
 
       def get(*args)
