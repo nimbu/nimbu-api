@@ -12,6 +12,16 @@ module Nimbu
       end
       alias :all :list
 
+      def customizations(*args)
+        arguments(args)
+
+        response = get_request("/products/customizations", arguments.params)
+        return response unless block_given?
+        response.each { |el| yield el }
+      end
+      alias :fields :customizations
+      alias :custom_fields :customizations
+
       def count(*args)
         arguments(args)
 
