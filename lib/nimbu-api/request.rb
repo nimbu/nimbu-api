@@ -61,8 +61,8 @@ module Nimbu
             request.body = extract_data_from_params(params) unless params.empty?
           end
         else
-          request.path = path
           request.body = params
+          request.url(path)
         end
       end
       Response::Wrapper.new(response, self).auto_paginate
