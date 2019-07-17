@@ -39,6 +39,7 @@ require 'nimbu-api/endpoints/orders'
 require 'nimbu-api/endpoints/functions'
 require 'nimbu-api/endpoints/jobs'
 require 'nimbu-api/endpoints/roles'
+require 'nimbu-api/endpoints/users'
 
 module Nimbu
   extend Configuration

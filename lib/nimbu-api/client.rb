@@ -54,5 +54,9 @@ module Nimbu
       Nimbu::Builder.new('Login', current_options.merge(options), &block).response
     end
 
+    def users(options={}, &block)
+      Nimbu::Builder.new('Users', current_options.merge(options), &block)
+    end
+
   end # Client
 end # Nimbu
