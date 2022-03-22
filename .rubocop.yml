@@ -1,0 +1,13 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+require: rubocop-performance
+
+Performance:
+  Enabled: true
+
+AllCops:
+  TargetRubyVersion: 2.5
+  NewCops: disable
+  Exclude:
+    - 'vendor/**/*'

@@ -1,16 +1,17 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 module Nimbu
   module Endpoints
     class Devices < Endpoint
-      def list(*args)
+      def list(*args, &block)
         arguments(args)
 
         response = get_request("/devices", arguments.params)
         return response unless block_given?
-        response.each { |el| yield el }
+        response.each(&block)
       end
-      alias :all :list
+      alias_method :all, :list
 
       def count(*args)
         arguments(args)
@@ -19,11 +20,11 @@ module Nimbu
       end
 
       def get(*args)
-        arguments(args, :required => [:device_id])
+        arguments(args, required: [:device_id])
 
         get_request("/devices/#{device_id}", arguments.params)
       end
-      alias :find :get
+      alias_method :find, :get
 
       def create(*args)
         arguments(args)
@@ -32,18 +33,18 @@ module Nimbu
       end
 
       def update(*args)
-        arguments(args, :required => [:device_id])
+        arguments(args, required: [:device_id])
 
         patch_request("/devices/#{device_id}", arguments.params)
       end
-      alias :edit :update
+      alias_method :edit, :update
 
       def delete(*args)
-        arguments(args, :required => [:device_id])
+        arguments(args, required: [:device_id])
 
         delete_request("/devices/#{device_id}", arguments.params)
       end
-      alias :remove :delete
+      alias_method :remove, :delete
 
       def push(*args)
         arguments(args)
@@ -53,8 +54,7 @@ module Nimbu
 
         post_request("/devices/push", data, params: query_params)
       end
-      alias :message :push
-
+      alias_method :message, :push
     end # Devices
   end # Endpoints
 end # Nimbu

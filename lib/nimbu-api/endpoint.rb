@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+# frozen_string_literal: true
 
 module Nimbu
   # Core class for api interface operations
@@ -8,14 +9,14 @@ module Nimbu
     include Connection
     include Request
 
-    attr_reader *Configuration.keys
-    attr_accessor *Request::Validations::VALID_API_KEYS
+    attr_reader(*Configuration.keys)
+    attr_accessor(*Request::Validations::VALID_API_KEYS)
 
     attr_accessor :current_options
 
     # Returns all API public methods for a given class.
     def self.inherited(klass)
-      klass.class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+      klass.class_eval(<<-RUBY_EVAL, __FILE__, __LINE__ + 1)
         def self.actions
           self.new.api_methods_in(#{klass})
         end
@@ -28,17 +29,16 @@ module Nimbu
 
     def api_methods_in(klass)
       puts "---"
-      (klass.send(:instance_methods, false) - ['actions']).sort.each do |method|
+      (klass.send(:instance_methods, false) - ["actions"]).sort.each do |method|
         puts "|--> #{method}"
       end
       klass.included_modules.each do |mod|
-        if mod.to_s =~ /#{klass}/
-          puts "| \\ #{mod.to_s}"
-          mod.instance_methods(false).each do |met|
-            puts "|  |--> #{met}"
-          end
-          puts "| /"
+        next unless /#{klass}/.match?(mod.to_s)
+        puts "| \\ #{mod}"
+        mod.instance_methods(false).each do |met|
+          puts "|  |--> #{met}"
         end
+        puts "| /"
       end
       puts "---"
       nil
@@ -46,29 +46,29 @@ module Nimbu
 
     def append_arguments(method)
       _method = self.method(method)
-      if _method.arity == 0
-        args = "()"
+      args = if _method.arity == 0
+        "()"
       elsif _method.arity > 0
-        args = "(few)"
+        "(few)"
       else
-        args = "(else)"
+        "(else)"
       end
       args
     end
 
     # Callback to update current configuration options
-     class_eval do
-       Configuration.keys.each do |key|
-         define_method "#{key}=" do |arg|
-           self.instance_variable_set("@#{key}", arg)
-           self.current_options.merge!({:"#{key}" => arg})
-         end
-       end
-     end
+    class_eval do
+      Configuration.keys.each do |key|
+        define_method "#{key}=" do |arg|
+          instance_variable_set("@#{key}", arg)
+          current_options.merge!({ "#{key}": arg })
+        end
+      end
+    end
 
     # Create new API
     #
-    def initialize(options={}, &block)
+    def initialize(options = {}, &block)
       setup(options)
       client(options) if client_id? && client_secret?
       yield_or_eval(&block) if block_given?
@@ -76,14 +76,14 @@ module Nimbu
 
     def yield_or_eval(&block)
       return unless block
-      block.arity > 0 ? yield(self) : self.instance_eval(&block)
+      block.arity > 0 ? yield(self) : instance_eval(&block)
     end
 
     # Configure options and process basic authorization
     #
-    def setup(options={})
-      options.each do |k,v|
-        self.set(k,v,true)
+    def setup(options = {})
+      options.each do |k, v|
+        set(k, v, true)
       end
       options = Nimbu.options.merge(options)
       self.current_options = options
@@ -98,7 +98,7 @@ module Nimbu
     def process_basic_auth(auth)
       case auth
       when String
-        self.login, self.password = auth.split(':', 2)
+        self.login, self.password = auth.split(":", 2)
       when Hash
         self.login    = auth[:login]
         self.password = auth[:password]
@@ -109,9 +109,9 @@ module Nimbu
     def method_missing(method, *args, &block) # :nodoc:
       case method.to_s
       when /^(.*)\?$/
-        return !!self.send($1.to_s)
+        !!send(Regexp.last_match(1).to_s)
       when /^clear_(.*)$/
-        self.send("#{$1.to_s}=", nil)
+        send("#{Regexp.last_match(1)}=", nil)
       else
         super
       end
@@ -121,7 +121,7 @@ module Nimbu
     #
     # Returns Arguments instance.
     #
-    def arguments(args=(not_set = true), options={}, &block)
+    def arguments(args = (not_set = true), options = {}, &block)
       if not_set
         @arguments
       else
@@ -134,27 +134,27 @@ module Nimbu
     def with(args)
       case args
       when Hash
-        set args
+        set(args)
       else
-        ::Kernel.raise ArgumentError, 'This api does not support passed in arguments'
+        ::Kernel.raise ArgumentError, "This api does not support passed in arguments"
       end
     end
 
     # Set an option to a given value
-    def set(option, value=(not_set=true), ignore_setter=false, &block)
-      raise ArgumentError, 'value not set' if block and !not_set
+    def set(option, value = (not_set = true), ignore_setter = false, &block)
+      raise ArgumentError, "value not set" if block and !not_set
       return self if !not_set and value.nil?
 
       if not_set
-        set_options option
+        set_options(option)
         return self
       end
 
-      if respond_to?("#{option}=") and not ignore_setter
+      if respond_to?("#{option}=") and !ignore_setter
         return __send__("#{option}=", value)
       end
 
-      define_accessors option, value
+      define_accessors(option, value)
       self
     end
 
@@ -164,13 +164,13 @@ module Nimbu
     #
     def set_options(options)
       unless options.respond_to?(:each)
-        raise ArgumentError, 'cannot iterate over value'
+        raise ArgumentError, "cannot iterate over value"
       end
       options.each { |key, value| set(key, value) }
     end
 
     def define_accessors(option, value)
-      setter = proc { |val|  set option, val, true }
+      setter = proc { |val| set(option, val, true) }
       getter = proc { value }
 
       define_singleton_method("#{option}=", setter) if setter
@@ -179,7 +179,7 @@ module Nimbu
 
     # Dynamically define a method for setting request option
     #
-    def define_singleton_method(method_name, content=Proc.new)
+    def define_singleton_method(method_name, content = Proc.new)
       (class << self; self; end).class_eval do
         undef_method(method_name) if method_defined?(method_name)
         if String === content
@@ -191,9 +191,8 @@ module Nimbu
     end
 
     def _merge_mime_type(resource, params) # :nodoc:
-#       params['resource'] = resource
-#       params['mime_type'] = params['mime_type'] || :raw
+      #       params['resource'] = resource
+      #       params['mime_type'] = params['mime_type'] || :raw
     end
-
   end # Endpoint
 end # Nimbu

@@ -3,48 +3,46 @@
 
 module Nimbu
   module Endpoints
-    class Coupons < Endpoint
+    class Menus < Endpoint
       def list(*args, &block)
         arguments(args)
 
-        response = get_request("/coupons", arguments.params)
+        response = get_request("/menus", arguments.params)
         return response unless block_given?
         response.each(&block)
       end
       alias_method :all, :list
 
       def count(*args)
-        arguments(args)
-
-        get_request("/coupons/count", arguments.params)
+        get_request("/menus/count", arguments.params)
       end
 
       def get(*args)
-        arguments(args, required: [:coupon_id])
+        arguments(args, required: [:menu_id])
 
-        get_request("/coupons/#{coupon_id}", arguments.params)
+        get_request("/menus/#{menu_id}", arguments.params)
       end
       alias_method :find, :get
 
       def create(*args)
         arguments(args)
 
-        post_request("/coupons", arguments.params)
+        post_request("/menus", arguments.params)
       end
 
       def update(*args)
-        arguments(args, required: [:coupon_id])
+        arguments(args, required: [:menu_id])
 
-        patch_request("/coupons/#{coupon_id}", arguments.params)
+        patch_request("/menus/#{menu_id}", arguments.params)
       end
       alias_method :edit, :update
 
       def delete(*args)
-        arguments(args, required: [:coupon_id])
+        arguments(args, required: [:menu_id])
 
-        delete_request("/coupons/#{coupon_id}", arguments.params)
+        delete_request("/menus/#{menu_id}", arguments.params)
       end
       alias_method :remove, :delete
-    end # Products
+    end # Menus
   end # Endpoints
 end # Nimbu

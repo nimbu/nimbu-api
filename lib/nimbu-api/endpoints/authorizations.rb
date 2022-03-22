@@ -1,18 +1,11 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 module Nimbu
   module Endpoints
     class Authorizations < Endpoint
-
-      VALID_AUTH_PARAM_NAMES = %w[
-        scopes
-        add_scopes
-        remove_scopes
-        note
-        note_url
-        client_id
-        client_secret
-      ].freeze
+      VALID_AUTH_PARAM_NAMES = ["scopes", "add_scopes", "remove_scopes", "note", "note_url", "client_id",
+                                "client_secret",].freeze
 
       # List authorizations
       #
@@ -21,15 +14,15 @@ module Nimbu
       #  nimbu.oauth.list
       #  nimbu.oauth.list { |auth| ... }
       #
-      def list(*args)
+      def list(*args, &block)
         require_authentication
         arguments(args)
 
         response = get_request("/authorizations", arguments.params)
         return response unless block_given?
-        response.each { |el| yield el }
+        response.each(&block)
       end
-      alias :all :list
+      alias_method :all, :list
 
       # Get a single authorization
       #
@@ -39,11 +32,11 @@ module Nimbu
       #
       def get(*args)
         require_authentication
-        arguments(args, :required => [:authorization_id])
+        arguments(args, required: [:authorization_id])
 
         get_request("/authorizations/#{authorization_id}", arguments.params)
       end
-      alias :find :get
+      alias_method :find, :get
 
       # Create a new authorization
       #
@@ -60,7 +53,7 @@ module Nimbu
       def create(*args)
         require_authentication
         arguments(args) do
-          sift VALID_AUTH_PARAM_NAMES
+          sift(VALID_AUTH_PARAM_NAMES)
         end
 
         post_request("/authorizations", arguments.params)
@@ -81,13 +74,13 @@ module Nimbu
       #
       def update(*args)
         require_authentication
-        arguments(args, :required => [:authorization_id]) do
-          sift VALID_AUTH_PARAM_NAMES
+        arguments(args, required: [:authorization_id]) do
+          sift(VALID_AUTH_PARAM_NAMES)
         end
 
         patch_request("/authorizations/#{authorization_id}", arguments.params)
       end
-      alias :edit :update
+      alias_method :edit, :update
 
       # Delete an authorization
       #
@@ -96,18 +89,18 @@ module Nimbu
       #
       def delete(*args)
         require_authentication
-        arguments(args, :required => [:authorization_id])
+        arguments(args, required: [:authorization_id])
 
         delete_request("/authorizations/#{authorization_id}", arguments.params)
       end
-      alias :remove :delete
+      alias_method :remove, :delete
 
       private
 
       def require_authentication
-        raise ArgumentError, 'You can only access authentication tokens through Basic Authentication' unless authenticated?
+        raise ArgumentError,
+          "You can only access authentication tokens through Basic Authentication" unless authenticated?
       end
-
     end # Authorizations
   end # Endpoints
 end # Nimbu

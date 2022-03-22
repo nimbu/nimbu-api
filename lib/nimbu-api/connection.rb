@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 module Nimbu
   module Connection
@@ -10,39 +11,39 @@ module Nimbu
       :url,
       :params,
       :request,
-      :ssl
+      :ssl,
     ].freeze
 
-    def default_options(options={})
+    def default_options(options = {})
       {
-        :ssl => options.fetch(:ssl) { ssl },
-        :url => options.fetch(:endpoint) { Nimbu.endpoint }
+        ssl: options.fetch(:ssl) { ssl },
+        url: options.fetch(:endpoint) { Nimbu.endpoint },
       }.merge(options)
     end
 
     # Default middleware stack that uses default adapter as specified at
     # configuration stage.
     #
-    def default_middleware(options={})
-      Proc.new do |builder|
+    def default_middleware(options = {})
+      proc do |builder|
         unless options[:with_attachments]
-          builder.use Nimbu::Request::Json
+          builder.use(Nimbu::Request::Json)
         end
-        builder.use Faraday::Request::Multipart
-        builder.use Faraday::Request::UrlEncoded
-        builder.use Nimbu::Request::OAuth2, oauth_token if oauth_token?
-        builder.use Nimbu::Request::BasicAuth, authentication if basic_authed?
-        builder.use Nimbu::Request::UserAgent
-        builder.use Nimbu::Request::SiteHeader, subdomain
-        builder.use Nimbu::Request::ContentLocale, content_locale
+        builder.use(Faraday::Request::Multipart)
+        builder.use(Faraday::Request::UrlEncoded)
+        builder.use(Nimbu::Request::OAuth2, oauth_token) if oauth_token?
+        builder.use(Nimbu::Request::BasicAuth, authentication) if basic_authed?
+        builder.use(Nimbu::Request::UserAgent)
+        builder.use(Nimbu::Request::SiteHeader, subdomain)
+        builder.use(Nimbu::Request::ContentLocale, content_locale)
 
-        builder.use Faraday::Response::Logger if ENV['DEBUG']
-        builder.use Nimbu::Response::RaiseError
+        builder.use(Faraday::Response::Logger) if ENV["DEBUG"]
+        builder.use(Nimbu::Response::RaiseError)
         unless options[:raw]
-          builder.use Nimbu::Response::Mashify
-          builder.use Nimbu::Response::Json
+          builder.use(Nimbu::Response::Mashify)
+          builder.use(Nimbu::Response::Json)
         end
-        builder.adapter adapter
+        builder.adapter(adapter)
       end
     end
 
@@ -61,25 +62,22 @@ module Nimbu
     # Exposes middleware builder to facilitate custom stacks and easy
     # addition of new extensions such as cache adapter.
     #
-    def stack(options={}, &block)
-      @stack ||= begin
-        if block_given?
-          Faraday::RackBuilder.new(&block)
-        else
-          Faraday::RackBuilder.new(&default_middleware(options))
-        end
+    def stack(options = {}, &block)
+      @stack ||= if block_given?
+        Faraday::RackBuilder.new(&block)
+      else
+        Faraday::RackBuilder.new(&default_middleware(options))
       end
     end
 
     # Returns a Fraday::Connection object
     #
-    def connection(options={})
-      conn_options = default_options(options).keep_if {|k,_| ALLOWED_OPTIONS.include? k }
+    def connection(options = {})
+      conn_options = default_options(options).keep_if { |k, _| ALLOWED_OPTIONS.include?(k) }
       clear_cache unless options.empty?
-      puts "OPTIONS:#{conn_options.inspect}" if ENV['DEBUG']
+      puts "OPTIONS:#{conn_options.inspect}" if ENV["DEBUG"]
 
-      Faraday.new(conn_options.merge(:builder => stack(options)))
+      Faraday.new(conn_options.merge(builder: stack(options)))
     end
-
   end # Connection
 end # Nimbu
