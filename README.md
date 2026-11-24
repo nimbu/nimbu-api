@@ -1,5 +1,9 @@
 # NimbuAPI
 
+> [!WARNING]
+> **Deprecated.** This gem is no longer maintained and receives no security updates.
+> Use the [Nimbu Go CLI](https://github.com/nimbu/cli) or call the Nimbu REST API directly.
+
 [![Gem Version](https://badge.fury.io/rb/nimbu-api.png)](http://badge.fury.io/rb/nimbu-api)
 
 A Ruby wrapper for the Nimbu API.

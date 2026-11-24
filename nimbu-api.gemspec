@@ -14,6 +14,12 @@ Gem::Specification.new do |gem|
   gem.description   = "Nimbu is the easiest way to build a beautiful multi-lingual online store! See http://nimbu.io for more information."
   gem.homepage      = "http://www.nimbu.io"
   gem.license       = "MIT"
+  gem.metadata      = { "source_code_uri" => "https://github.com/nimbu/nimbu-api" }
+
+  gem.post_install_message = <<~MSG
+    The nimbu-api gem is deprecated and no longer maintained.
+    Use the Nimbu Go CLI (https://github.com/nimbu/cli) or call the Nimbu REST API directly.
+  MSG
 
   gem.files         = `git ls-files`.split($/)
   gem.require_paths = ["lib"]
